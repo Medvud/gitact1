@@ -10,16 +10,24 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        compiler: [g++,clang, VS]
+        compiler: [gcc,clang, VS]
+        include:
+          - os: clang
+            compiler: clang
+            cpp_compiler: clang++
+          - os: gcc
+            compiler: gcc
+            cpp_compiler: g++
         exclude:
           - os: windows-latest
-            compiler: g++
+            compiler: gcc
           - os: windows-latest
             compiler: clang
           - os: ubuntu-latest
             compiler: VS
           - os: ubuntu-latest
             compiler: VS
+        
     steps:
       - name: one
         uses: actions/checkout@v3
@@ -29,10 +37,7 @@ jobs:
           mkdir ./_build
           sudo apt update
           sudo apt install -y ${{matrix.compiler}} cmake
-          if: matrix.compiler == 'clang'
-          cmake -S . -B ./_build -DCMAKE_CXX_COMPILER=${{matrix.compiler}}++
-          if: matrix.compiler == 'g++'
-          cmake -S . -B ./_build -DCMAKE_CXX_COMPILER=${{matrix.compiler}}
+          cmake -S . -B ./_build -DCMAKE_CXX_COMPILER=${{matrix.cpp_compiler}}
           cmake --build ./_build
       - name: three
         if: matrix.os == 'windows-latest'
