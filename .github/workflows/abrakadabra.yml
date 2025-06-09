@@ -10,12 +10,12 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        compiler: [g++,clang++, VS]
+        compiler: [g++,clang, VS]
         exclude:
           - os: windows-latest
             compiler: g++
           - os: windows-latest
-            compiler: clang++
+            compiler: clang
           - os: ubuntu-latest
             compiler: VS
           - os: ubuntu-latest
@@ -28,7 +28,7 @@ jobs:
         run: |
           mkdir ./_build_${{matrix.compiler}}
           sudo apt update
-          sudo apt install -y ${{matrix.compiler}} cmake
+          sudo apt install -y ${{matrix.compiler}}
           cmake -S . -B ./_build_${{matrix.compiler}} -DCMAKE_CXX_COMPILER=${{matrix.compiler}}
           cmake --build ./_build_${{matrix.compiler}}
       - name: three
