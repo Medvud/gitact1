@@ -26,11 +26,11 @@ jobs:
       - name: two
         if: matrix.os == 'ubuntu-latest'
         run: |
-          mkdir ./_build_${{matrix.compiler}}
+          mkdir ./_build
           sudo apt update
-          sudo apt install -y ${{matrix.compiler}}
-          cmake -S . -B ./_build_${{matrix.compiler}} -DCMAKE_CXX_COMPILER=${{matrix.compiler}}
-          cmake --build ./_build_${{matrix.compiler}}
+          sudo apt install -y ${{matrix.compiler}} cmake
+          cmake -S . -B ./_build -DCMAKE_CXX_COMPILER=${{matrix.compiler}}++
+          cmake --build ./_build
       - name: three
         if: matrix.os == 'windows-latest'
         run: |
