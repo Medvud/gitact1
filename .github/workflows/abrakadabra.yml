@@ -10,12 +10,12 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        compiler: [g++,clang, VS]
+        compiler: [g++,clang++, VS]
         exclude:
           - os: windows-latest
             compiler: g++
           - os: windows-latest
-            compiler: clang
+            compiler: clang++
           - os: ubuntu-latest
             compiler: VS
           - os: ubuntu-latest
